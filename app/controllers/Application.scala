@@ -19,7 +19,7 @@ object Application extends Controller {
         if (curr > 1000) {
           val s = sleep.get()
           Thread.sleep(s)
-          if (s > 10000) {
+          if (s < 10000) {
             sleep.addAndGet(new Random().nextInt(100))
           }
         }
