@@ -14,10 +14,12 @@ object Application extends Controller {
   def index = Action {
     Async {
       Akka.future {
-        val s = sleep.get()
-        Thread.sleep(s)
-        if (s < 10000) {
-          sleep.addAndGet(new Random().nextInt(100))
+        if (failing.get()) {
+          val s = sleep.get()
+          Thread.sleep(s)
+          if (s < 10000) {
+            sleep.addAndGet(new Random().nextInt(100))
+          }
         }
         Ok(views.html.index("Application status: Failing = " + failing.get()))
       }
@@ -32,6 +34,7 @@ object Application extends Controller {
 
   def failOff = Action {
     failing.set(false)
+    sleep.set(1)
     Ok(views.html.index("Application status: Failing = " + failing.get()))
   }
 
