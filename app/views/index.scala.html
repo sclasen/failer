@@ -1,7 +1,11 @@
 @(message: String)
 
-@main("Welcome to Play 2.0") {
-    
-    @play20.welcome(message)
-    
-}
+
+<ul>
+    <li>@{message}</li>
+
+    <li><a href="/fail/on">Turn Failing On</a></li>
+
+    <li><a href="/fail/off">Turn Failing Off</a></li>
+</ul>
+
