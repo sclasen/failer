@@ -11,7 +11,7 @@ object Application extends Controller {
   val failing = new AtomicBoolean(false)
   val sleep = new AtomicInteger(1)
   val mean = 500
-  val stdDev = 5000
+  val stdDev = 1000
   val whileFailingAddPerRequest = 25
 
   def index = Action {
