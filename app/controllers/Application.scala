@@ -10,16 +10,19 @@ object Application extends Controller {
 
   val failing = new AtomicBoolean(false)
   val sleep = new AtomicInteger(1)
+  val mean = 500
+  val stdDev = 5000
+  val whileFailingAddPerRequest = 25
 
   def index = Action {
     Async {
       Akka.future {
         var rand = new Random()
-        var think = rand.nextInt(500)
+        var think = (mean + (stdDev * rand.nextGaussian().abs)).toLong
         if (failing.get()) {
           val s = sleep.get()
           if (s < 10000) {
-            sleep.addAndGet(new Random().nextInt(100))
+            sleep.addAndGet(rand.nextInt(whileFailingAddPerRequest))
           }
           think += s
         }
